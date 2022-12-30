@@ -1,6 +1,6 @@
-# Opinion Ate
+# Opinion Ate JS
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b0252632-26f2-490a-ae0c-2fbffac3d323/deploy-status)](https://app.netlify.com/sites/chips-opinion-ate/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7e7c7039-5439-469f-96e1-9c5a4a814f76/deploy-status)](https://app.netlify.com/sites/chips-opinion-ate-js/deploys)
 [![opinion-ate-js](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/bups7t/main&style=flat&logo=cypress)](https://cloud.cypress.io/projects/bups7t/runs)
 
 ## Description
