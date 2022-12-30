@@ -7,7 +7,7 @@
 
 An app for tracking reviews of dishes at different restaurants.
 
-Production site: https://chips-opinion-ate.netlify.app/
+Production site: https://chips-opinion-ate-js.netlify.app/
 
 ## Table of Contents
 
