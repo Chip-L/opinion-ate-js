@@ -4,9 +4,14 @@ on: [push]
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2] # Uses 2 parallel instances
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Unit Tests
@@ -16,6 +21,8 @@ jobs:
         with:
           start: yarn start
           wait-on: 'http://localhost:3000'
+          record: true
+          parallel: true
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
