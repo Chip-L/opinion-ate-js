@@ -1,5 +1,7 @@
-import { Button, TextField } from '@mui/material';
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import { Button, TextField } from '@mui/material';
+import { createRestaurant } from '../store/restaurants/actions';
 
 export function NewRestaurantFrom({ createRestaurant }) {
   const [name, setName] = useState('');
@@ -28,4 +30,7 @@ export function NewRestaurantFrom({ createRestaurant }) {
   );
 }
 
-export default NewRestaurantFrom;
+const mapStateToProps = null;
+const mapDispatchToProps = { createRestaurant };
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewRestaurantFrom);
