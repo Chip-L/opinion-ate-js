@@ -5,35 +5,49 @@ import restaurantReducer from './restaurants/reducers';
 
 describe('restaurants', () => {
   describe('loadRestaurants action', () => {
-    describe('initially', () => {
-      it('does not have the loading flag set', () => {
-        const initialState = {};
+    let store;
 
-        const store = createStore(
+    describe('initially', () => {
+      beforeEach(() => {
+        const initialState = {};
+        store = createStore(
           restaurantReducer,
           initialState,
           applyMiddleware(thunk)
         );
+      });
 
+      it('does not have the loading flag set', () => {
         expect(store.getState().loading).toEqual(false);
+      });
+
+      it('does not have the loadError flag set', async () => {
+        expect(store.getState().loadError).toEqual(false);
       });
     });
 
     describe('while loading', () => {
-      it('sets a loading flag', () => {
+      beforeEach(() => {
         const api = {
           loadRestaurants: () => new Promise(() => {}),
         };
-        const initialState = {};
+        const initialState = { loadError: true };
 
-        const store = createStore(
+        store = createStore(
           restaurantReducer,
           initialState,
           applyMiddleware(thunk.withExtraArgument(api))
         );
-        store.dispatch(loadRestaurants());
 
+        store.dispatch(loadRestaurants());
+      });
+
+      it('sets a loading flag', () => {
         expect(store.getState().loading).toEqual(true);
+      });
+
+      it('clears the error flag', () => {
+        expect(store.getState().loadError).toEqual(false);
       });
     });
 
@@ -42,7 +56,6 @@ describe('restaurants', () => {
         { id: 1, name: 'Sushi Place' },
         { id: 2, name: 'Pizza Place' },
       ];
-      let store;
 
       beforeEach(() => {
         const api = { loadRestaurants: () => Promise.resolve(records) };
@@ -62,6 +75,30 @@ describe('restaurants', () => {
 
       it('stores the restaurants', () => {
         expect(store.getState().records).toEqual(records);
+      });
+
+      it('clears the loading flag', () => {
+        expect(store.getState().loading).toEqual(false);
+      });
+    });
+
+    describe('when loading fails', () => {
+      beforeEach(() => {
+        const api = { loadRestaurants: () => Promise.reject() };
+
+        const initialState = {};
+
+        store = createStore(
+          restaurantReducer,
+          initialState,
+          applyMiddleware(thunk.withExtraArgument(api))
+        );
+
+        return store.dispatch(loadRestaurants());
+      });
+
+      it('sets the error flag', async () => {
+        expect(store.getState().loadError).toEqual(true);
       });
 
       it('clears the loading flag', () => {
