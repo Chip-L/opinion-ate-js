@@ -1,9 +1,20 @@
-import { CircularProgress, List, ListItem, ListItemText } from '@mui/material';
+import {
+  Alert,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadRestaurants } from '../store/restaurants/actions';
 
-export function RestaurantList({ loadRestaurants, restaurants, loading }) {
+export function RestaurantList({
+  loadRestaurants,
+  restaurants,
+  loading,
+  loadError,
+}) {
   useEffect(() => {
     loadRestaurants();
   }, [loadRestaurants]);
@@ -11,6 +22,9 @@ export function RestaurantList({ loadRestaurants, restaurants, loading }) {
   return (
     <>
       {loading && <CircularProgress />}
+      {loadError && (
+        <Alert severity="error">Restaurants could not be loaded.</Alert>
+      )}
       <List>
         {restaurants.map((restaurant) => (
           <ListItem key={restaurant.id}>
